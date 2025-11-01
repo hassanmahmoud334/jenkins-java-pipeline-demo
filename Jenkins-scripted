@@ -1,0 +1,11 @@
+node("agent-0"){
+    def maven = tool name: 'mvn-3-5-2', type: 'maven'
+    def jdk = tool name: 'java-11', type: 'jdk'
+    
+    stage("Build"){
+        sh "mvn package install"
+    }
+    stage("Test"){
+        sh "mvn test"
+    }
+}
