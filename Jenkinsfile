@@ -38,12 +38,15 @@ pipeline {
             steps {
                 echo "🐳 Building and pushing Docker image..."
                 script {
+                    // Build Docker image
                     sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
 
+                    // Login to DockerHub
                     withCredentials([string(credentialsId: 'dockerhub-pass', variable: 'DOCKERHUB_PASS')]) {
                         sh "echo $DOCKERHUB_PASS | docker login -u hassanmahmoud334 --password-stdin"
                     }
 
+                    // Push image
                     sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
                 }
             }
